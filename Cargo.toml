@@ -1,0 +1,13 @@
+[package]
+name = "mitmproxy-adblock"
+version = "0.9.6"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "mitmproxy_adblock"
+crate-type = ["cdylib"]
+
+[dependencies]
+adblock = "0.9.6"
+pyo3 = "0.24.0"
