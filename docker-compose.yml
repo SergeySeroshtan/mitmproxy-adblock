@@ -1,0 +1,13 @@
+services:
+  mitmproxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mitmproxy
+    command: mitmdump -s /etc/scripts/add-header.py
+    volumes:
+      - ~/.mitmproxy:/home/mitmproxy/.mitmproxy
+      - ./scripts:/etc/scripts
+    ports:
+      - "8118:8080"
+    restart: unless-stopped
