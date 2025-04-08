@@ -1,6 +1,8 @@
+use adblock::request::Request as AdblockRequest;
 use adblock::Engine as AdblockEngine;
 use pyo3::prelude::*;
 
+use crate::py_adblock::BlockerResult as AdblockBlockerResult;
 use crate::py_adblock::FilterSet as AdblockFilterSet;
 
 #[pyclass(unsendable)]
@@ -22,10 +24,23 @@ impl Engine {
         Self { engine }
     }
 
-    fn check(&self, request: &str) -> PyResult<bool> {
-        // Here you would implement the logic to check the request against the adblock rules.
-        // For now, we just return true for demonstration purposes.
-        println!("Checking request: {:?}", request);
-        Ok(true)
+    #[pyo3(signature = (url, source_url, request_resource_type = "other"))]
+    pub fn check_network_request(
+        &self,
+        url: &str,
+        source_url: &str,
+        request_resource_type: &str,
+    ) -> PyResult<AdblockBlockerResult> {
+        let request = AdblockRequest::new(url, source_url, request_resource_type);
+        if let Err(e) = request {
+            return Err(pyo3::exceptions::PyValueError::new_err(format!(
+                "Invalid request: {}",
+                e
+            )));
+        }
+        let request = request.unwrap();
+        let result = self.engine.check_network_request(&request);
+
+        Ok(AdblockBlockerResult::from(result))
     }
 }
