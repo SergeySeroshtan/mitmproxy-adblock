@@ -7,13 +7,10 @@ class Person:
 
 class AddHeader:
     def __init__(self):
-        self.num = 0
+        self.ad_blocker = mitmproxy_adblock.Engine()
 
     def response(self, flow):
-        self.num = self.num + 1
-        flow.response.headers["count"] = mitmproxy_adblock.__version__
-        person = Person("John Doe")
-        flow.response.headers["x-mitmproxy"] = mitmproxy_adblock.print_name(person)
+        flow.response.headers["x-shall-pass"] = str(self.ad_blocker.check("11111111"))
 
 
 addons = [AddHeader()]
