@@ -1,6 +1,8 @@
 use adblock::Engine as AdblockEngine;
 use pyo3::prelude::*;
 
+use crate::py_adblock::FilterSet as AdblockFilterSet;
+
 #[pyclass(unsendable)]
 pub struct Engine {
     engine: AdblockEngine,
@@ -11,6 +13,12 @@ impl Engine {
     #[new]
     fn new() -> Self {
         let engine = AdblockEngine::default();
+        Self { engine }
+    }
+
+    #[staticmethod]
+    pub fn from_filter_set(set: &AdblockFilterSet, optimize: bool) -> Self {
+        let engine = AdblockEngine::from_filter_set(set.filter_set.clone(), optimize);
         Self { engine }
     }
 
