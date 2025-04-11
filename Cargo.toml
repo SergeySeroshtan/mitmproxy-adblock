@@ -11,3 +11,4 @@ crate-type = ["cdylib"]
 [dependencies]
 adblock = "0.9.6"
 pyo3 = "0.24.0"
+scraper = "0.23.1"

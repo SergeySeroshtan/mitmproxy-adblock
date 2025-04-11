@@ -8,6 +8,8 @@ services:
     volumes:
       - ~/.mitmproxy:/home/mitmproxy/.mitmproxy
       - ./scripts:/etc/scripts
+      - ./filters:/etc/filters
+      - ./logs:/var/log/mitmproxy-adblock
     ports:
       - "8118:8080"
     restart: unless-stopped

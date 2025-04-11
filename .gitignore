@@ -14,3 +14,7 @@ target/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Custom
+filters/
+logs/
