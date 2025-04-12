@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: mitmproxy
-    command: mitmdump -s /etc/scripts/adblock.py
+    container_name: mitmproxy-adblock
+    command: mitmdump -s /etc/scripts/adblock.py --ignore-host "icloud.com" --set validate_inbound_headers=false
     volumes:
       - ./config:/home/mitmproxy/.mitmproxy
       - ./scripts:/etc/scripts

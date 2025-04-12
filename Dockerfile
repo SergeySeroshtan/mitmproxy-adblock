@@ -39,6 +39,11 @@ RUN eval "$(/pyenv/bin/pyenv init -)" && /pyenv/bin/pyenv local 3.13.2 && maturi
 
 # Build the final image
 # Use the official mitmproxy image as the base
-FROM mitmproxy/mitmproxy
+FROM mitmproxy/mitmproxy:11
 COPY --from=wheelbuilder /mitmproxy-adblock/target/wheels/*.whl /wheels/
 RUN pip install /wheels/mitmproxy_adblock-*.whl
+
+# Install requirements
+COPY requirements.txt /requirements.txt
+RUN pip install -r /requirements.txt
+RUN rm /requirements.txt
